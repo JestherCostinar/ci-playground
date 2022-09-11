@@ -1,0 +1,25 @@
+.center_div {
+    margin: 0px auto;
+    float: none;
+    padding: 48px;
+    border: 1px dashed;
+}
+
+.form-wrapper {
+    border-radius: 7px;
+}
+
+.form-wrapper label {
+    font-weight: bold;
+}
+
+.errors li {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+}
+
+.errors ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
