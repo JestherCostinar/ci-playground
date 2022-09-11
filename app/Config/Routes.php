@@ -43,6 +43,10 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->get('/dashboard', 'Home::dashboard', ['filter' => 'auth']);
 $routes->match(['get', 'post'], '/profile', 'Home::profile', ['filter' => 'auth']);
 
+// Users Tab
+$routes->get('/user', 'UserController::index', ['filter' => 'auth']);
+$routes->match(['get', 'post'], 'user/create', 'UserController::create', ['filter' => 'auth']);
+
 
 /*
  * --------------------------------------------------------------------
