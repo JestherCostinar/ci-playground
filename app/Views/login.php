@@ -23,7 +23,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="text" class="form-control" name="password">
+                <input type="password" class="form-control" name="password">
                 <span class="text-danger text-sm"><?= isset($validation) ? form_validator($validation, 'password') : ''; ?></span>
 
             </div>

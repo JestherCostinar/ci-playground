@@ -25,6 +25,7 @@
     <script src="<?= base_url('assets/js/jquery-3.6.1.js') ?>"></script>
     <script src="<?= base_url('assets/js/popper.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/boostrap.min.js') ?>"></script>
+    <?= $this->renderSection('scripts') ?>
 </body>
 
 </html>

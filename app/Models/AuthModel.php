@@ -13,6 +13,7 @@ class AuthModel extends Model
         'lastname',
         'email',
         'password',
+        'image',
         'updated_at'
     ];
 

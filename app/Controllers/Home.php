@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\AuthModel;
+use CodeIgniter\Files\File;
 
 class Home extends BaseController
 {
     public function __construct()
     {
         helper(['url', 'form']);
+        $this->userModel = new AuthModel();
     }
     
     public function index()
@@ -29,11 +31,11 @@ class Home extends BaseController
     }
 
     public function profile() {
-        $userModel = new AuthModel();
+        
 
         $data = [
             'title' => 'Profile',
-            'user' => $userModel->where('id', session()->get('id'))->first()
+            'user' => $this->userModel->where('id', session()->get('id'))->first()
         ];
 
         if ($this->request->getMethod() === 'post') {
@@ -68,12 +70,53 @@ class Home extends BaseController
                     $newData['password'] = $this->request->getPost('password');
                 }
                 
-                $userModel->save($newData);
+                $this->userModel->save($newData);
                 session()->setFlashData('success', 'Successfully Update');
                 return redirect()->to('/profile');
             }
         }
 
         return view('profile', $data);
-    }   
+    }
+    
+    public function upload($id) {
+
+        $data = [
+            'title' => 'Upload Image'
+        ];
+
+        if ($this->request->getMethod() === 'post') {
+            $rules = [
+                'userfile' => [
+                    'label' => 'Image File',
+                    'rules' => 'uploaded[userfile]'
+                    . '|is_image[userfile]'
+                    . '|mime_in[userfile,image/jpg,image/jpeg,image/png]'
+                    . '|max_size[userfile, 100]'
+                ]
+            ];
+
+            if(! $this->validate($rules)) {
+                $data['validation'] = $this->validator;
+            } else {
+                // echo "hi"; exit;
+                $image = $this->request->getFile('userfile');
+                if (!$image->hasMoved()) {
+                    $file_path = WRITEPATH . 'uploads/' . $image->store();
+                    $uploaded_fileinfo = new File($file_path);
+                    
+                    $imageData = [
+                        'image' => esc($uploaded_fileinfo->getBasename()),
+                        'user_id' => $id
+                    ];
+
+                    if($this->userModel->update($id, $imageData)) {
+                        $data['Flash_message'] = TRUE;
+                    }
+                }
+            }
+        }
+
+        return view('upload', $data);
+    }
 }
