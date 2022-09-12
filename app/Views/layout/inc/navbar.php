@@ -16,6 +16,9 @@
                     <li class="nav-item">
                         <a class="nav-link <?= ($title == 'User' ? 'active' : null) ?>" href="<?= base_url('/user') ?>">Users</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= ($title == 'Upload Image' ? 'active' : null) ?>" href="<?= base_url('/upload/' . session()->get('id')) ?>">Image Upload</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav my-2 my-lg-0">
