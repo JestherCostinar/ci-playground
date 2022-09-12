@@ -49,6 +49,8 @@ $routes->get('/user', 'UserController::index', ['filter' => 'auth']);
 $routes->match(['get', 'post'], 'user/create', 'UserController::create', ['filter' => 'auth']);
 $routes->match(['get', 'post'], 'user/update/(:num)', 'UserController::update/$1', ['filter' => 'auth']);
 $routes->get('user/delete/(:num)', 'UserController::delete/$1', ['filter' => 'auth']);
+$routes->match(['get', 'post'], 'user/exportuserdata', 'UserController::exportuserdata', ['filter' => 'auth']);
+
 
 
 /*

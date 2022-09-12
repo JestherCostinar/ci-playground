@@ -10,7 +10,9 @@
     <?php endif; ?>
     <div class="card-header">
         <h3>Users Table
-            <a href="<?= base_url('user/create') ?>" class="btn btn-primary float-end">Add Users</a>
+            <a href="<?= base_url('user/create') ?>" class="btn btn-primary float-end mx-2">Add Users</a>
+            <a href="<?= base_url('user/exportuserdata') ?>" class="btn btn-primary float-end">Generate Excel Report</a>
+
         </h3>
     </div>
     <div class="card-body">
@@ -65,6 +67,7 @@
                 });
             }
         });
-    }); n
+    });
+    n
 </script>
 <?= $this->endSection(); ?>

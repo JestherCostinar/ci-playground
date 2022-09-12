@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AuthModel;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class UserController extends BaseController
 {
@@ -108,5 +110,37 @@ class UserController extends BaseController
     public function delete($id = null) {
         if($this->userModel->where('id', $id)->delete()) 
             return redirect()->to('/user')->with('success', 'Delete successfully');
+    }
+
+    public function exportuserdata()
+    {
+        $dateToday = date('Y-m-d');
+        $fileName = 'Report-' . $dateToday . '.xlsx';
+        $spreadsheet = new Spreadsheet();
+        $employees = $this->userModel->findAll();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'First name');
+        $sheet->setCellValue('C1', 'Last name');
+        $sheet->setCellValue('D1', 'Email');
+        $rows = 2;
+        foreach ($employees as $val) {
+            $sheet->setCellValue('A' . $rows, $val['id']);
+            $sheet->setCellValue('B' . $rows, $val['firstname']);
+            $sheet->setCellValue('C' . $rows, $val['lastname']);
+            $sheet->setCellValue('D' . $rows, $val['email']);
+            $rows++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($fileName);
+        header("Content-Type: application/vnd.ms-excel");
+        header('Content-Disposition: attachment; filename="' . basename($fileName) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length:' . filesize($fileName));
+        flush();
+        readfile($fileName);
+        exit;
     }
 }
