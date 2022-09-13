@@ -66,7 +66,7 @@ class AuthController extends BaseController
 
             $errors = [
                 'confirmPassword' => [
-                    'matches' => 'Password and confirm password is not matches'
+                    'matches' => 'Password and confirm password is not match'
                 ]
             ];
 
